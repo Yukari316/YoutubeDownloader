@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 using MaterialDesignThemes.Wpf;
 using Stylet;
 using YoutubeDownloader.Services;
-using YoutubeDownloader.Utils;
 using YoutubeDownloader.ViewModels.Components;
-using YoutubeDownloader.ViewModels.Dialogs;
 using YoutubeDownloader.ViewModels.Framework;
 
 namespace YoutubeDownloader.ViewModels;
@@ -37,23 +35,6 @@ public class RootViewModel : Screen
         DisplayName = $"{App.Name} v{App.VersionString}";
     }
 
-    private async Task ShowWarInUkraineMessageAsync()
-    {
-        var dialog = _viewModelFactory.CreateMessageBoxViewModel(
-            "Ukraine is at war!", @"
-My country, Ukraine, has been invaded by Russian military forces in an act of aggression that can only be described as genocide.
-Be on the right side of history! Consider supporting Ukraine in its fight for freedom.
-
-Press LEARN MORE to find ways that you can help.".Trim(),
-            "LEARN MORE", "CLOSE"
-        );
-
-        if (await _dialogManager.ShowDialogAsync(dialog) == true)
-        {
-            ProcessEx.StartShellExecute("https://tyrrrz.me");
-        }
-    }
-
     private async Task CheckForUpdatesAsync()
     {
         try
@@ -83,7 +64,6 @@ Press LEARN MORE to find ways that you can help.".Trim(),
 
     public async void OnViewFullyLoaded()
     {
-        await ShowWarInUkraineMessageAsync();
         await CheckForUpdatesAsync();
     }
 
