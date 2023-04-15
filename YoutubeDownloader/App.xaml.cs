@@ -8,13 +8,17 @@ namespace YoutubeDownloader;
 
 public partial class App
 {
-    private static Assembly Assembly { get; } = typeof(App).Assembly;
+    private static Assembly Assembly { get; } = Assembly.GetExecutingAssembly();
 
     public static string Name { get; } = Assembly.GetName().Name!;
 
     public static Version Version { get; } = Assembly.GetName().Version!;
 
     public static string VersionString { get; } = Version.ToString(3);
+
+    public static string ProjectUrl { get; } = "https://github.com/Tyrrrz/YoutubeDownloader";
+
+    public static string ChangelogUrl { get; } = ProjectUrl + "/blob/master/Changelog.md";
 }
 
 public partial class App

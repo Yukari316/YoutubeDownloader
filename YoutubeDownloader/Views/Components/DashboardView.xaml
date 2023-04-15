@@ -109,7 +109,7 @@
             <StackPanel
                 Margin="8,32,8,8"
                 HorizontalAlignment="Center"
-                Visibility="{Binding Downloads.Count, Converter={x:Static s:BoolToVisibilityConverter.InverseInstance}}">
+                Visibility="{Binding IsDownloadsAvailable, Converter={x:Static converters:BoolToVisibilityConverter.CollapsedOrVisible}}">
                 <materialDesign:PackIcon
                     Width="258"
                     Height="258"
@@ -143,7 +143,7 @@
                 ItemsSource="{Binding Downloads}"
                 ScrollViewer.CanContentScroll="False"
                 VerticalScrollBarVisibility="Auto"
-                Visibility="{Binding Downloads.Count, Converter={x:Static s:BoolToVisibilityConverter.Instance}}">
+                Visibility="{Binding IsDownloadsAvailable, Converter={x:Static converters:BoolToVisibilityConverter.VisibleOrHidden}}">
                 <DataGrid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Command="{s:Action RemoveSuccessfulDownloads}" Header="Remove successful downloads" />
@@ -307,7 +307,7 @@
                                         Command="{s:Action ShowFile}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"
                                         ToolTip="Show file"
-                                        Visibility="{Binding CanShowFile, Converter={x:Static s:BoolToVisibilityConverter.Instance}}">
+                                        Visibility="{Binding CanShowFile, Converter={x:Static converters:BoolToVisibilityConverter.VisibleOrCollapsed}}">
                                         <materialDesign:PackIcon
                                             Width="24"
                                             Height="24"
@@ -322,7 +322,7 @@
                                         Command="{s:Action OpenFile}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"
                                         ToolTip="Play"
-                                        Visibility="{Binding CanOpenFile, Converter={x:Static s:BoolToVisibilityConverter.Instance}}">
+                                        Visibility="{Binding CanOpenFile, Converter={x:Static converters:BoolToVisibilityConverter.VisibleOrCollapsed}}">
                                         <materialDesign:PackIcon
                                             Width="24"
                                             Height="24"
@@ -337,7 +337,7 @@
                                         Command="{s:Action Cancel}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"
                                         ToolTip="Cancel download"
-                                        Visibility="{Binding CanCancel, Converter={x:Static s:BoolToVisibilityConverter.Instance}}">
+                                        Visibility="{Binding CanCancel, Converter={x:Static converters:BoolToVisibilityConverter.VisibleOrCollapsed}}">
                                         <materialDesign:PackIcon
                                             Width="24"
                                             Height="24"
@@ -352,7 +352,7 @@
                                         CommandParameter="{Binding}"
                                         Style="{DynamicResource MaterialDesignFlatButton}"
                                         ToolTip="Restart download"
-                                        Visibility="{Binding IsCanceledOrFailed, Converter={x:Static s:BoolToVisibilityConverter.Instance}}">
+                                        Visibility="{Binding IsCanceledOrFailed, Converter={x:Static converters:BoolToVisibilityConverter.VisibleOrCollapsed}}">
                                         <materialDesign:PackIcon
                                             Width="24"
                                             Height="24"
