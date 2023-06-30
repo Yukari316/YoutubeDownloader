@@ -75,7 +75,7 @@ public class RootViewModel : Screen
 
         _settingsService.Load();
 
-        // Sync theme with settings
+        // Sync the theme with settings
         if (_settingsService.IsDarkModeEnabled)
         {
             App.SetDarkTheme();
@@ -85,7 +85,7 @@ public class RootViewModel : Screen
             App.SetLightTheme();
         }
 
-        // App has just been updated, display changelog
+        // App has just been updated, display the changelog
         if (_settingsService.LastAppVersion is not null && _settingsService.LastAppVersion != App.Version)
         {
             Notifications.Enqueue(
