@@ -20,7 +20,7 @@ public class MediaTagInjector
 
         mediaFile.SetComment(
             $"""
-            Downloaded using YoutubeDownloader (https://github.com/Tyrrrz/YoutubeDownloader)
+            Downloaded using YoutubeDownloader (https://github.com/Yukari316/YoutubeDownloader-Fuck)
             Video: {video.Title}
             Video URL: {video.Url}
             Channel: {video.Author.ChannelTitle}
