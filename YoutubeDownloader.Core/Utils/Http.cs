@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace YoutubeDownloader.Core.Utils;
 
-internal static class Http
+public static class Http
 {
     public static HttpClient Client { get; } = new()
     {
