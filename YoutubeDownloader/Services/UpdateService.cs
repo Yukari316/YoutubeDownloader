@@ -12,7 +12,7 @@ public class UpdateService(SettingsService settingsService) : IDisposable
         new GithubPackageResolver(
             "Yukari316",
             "YoutubeDownloader-NoUkraine",
-            "YoutubeDownloader.zip"
+            "win-x64.zip"
         ),
         new ZipPackageExtractor()
     );
