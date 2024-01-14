@@ -9,11 +9,7 @@ namespace YoutubeDownloader.Services;
 public class UpdateService(SettingsService settingsService) : IDisposable
 {
     private readonly IUpdateManager _updateManager = new UpdateManager(
-        new GithubPackageResolver(
-            "Yukari316",
-            "YoutubeDownloader-NoUkraine",
-            "win-x64.zip"
-        ),
+        new GithubPackageResolver("Yukari316", "YoutubeDownloader-NoUkraine", "win-x64.zip"),
         new ZipPackageExtractor()
     );
 
