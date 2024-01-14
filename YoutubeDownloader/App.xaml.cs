@@ -18,22 +18,24 @@ public partial class App
 
     public static string ProjectUrl { get; } = "https://github.com/Tyrrrz/YoutubeDownloader";
 
-    public static string ChangelogUrl { get; } = ProjectUrl + "/blob/master/Changelog.md";
+    public static string LatestReleaseUrl { get; } = ProjectUrl + "/releases/latest";
 }
 
 public partial class App
 {
-    private static Theme LightTheme { get; } = Theme.Create(
-        new MaterialDesignLightTheme(),
-        MediaColor.FromHex("#343838"),
-        MediaColor.FromHex("#F9A825")
-    );
+    private static Theme LightTheme { get; } =
+        Theme.Create(
+            new MaterialDesignLightTheme(),
+            MediaColor.FromHex("#343838"),
+            MediaColor.FromHex("#F9A825")
+        );
 
-    private static Theme DarkTheme { get; } = Theme.Create(
-        new MaterialDesignDarkTheme(),
-        MediaColor.FromHex("#E8E8E8"),
-        MediaColor.FromHex("#F9A825")
-    );
+    private static Theme DarkTheme { get; } =
+        Theme.Create(
+            new MaterialDesignDarkTheme(),
+            MediaColor.FromHex("#E8E8E8"),
+            MediaColor.FromHex("#F9A825")
+        );
 
     public static void SetLightTheme()
     {

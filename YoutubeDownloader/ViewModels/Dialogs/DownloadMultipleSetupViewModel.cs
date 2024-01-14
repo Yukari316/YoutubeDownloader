@@ -13,47 +13,33 @@ using YoutubeExplode.Videos.Streams;
 
 namespace YoutubeDownloader.ViewModels.Dialogs;
 
-public class DownloadMultipleSetupViewModel : DialogScreen<IReadOnlyList<DownloadViewModel>>
+public class DownloadMultipleSetupViewModel(
+    IViewModelFactory viewModelFactory,
+    DialogManager dialogManager,
+    SettingsService settingsService
+) : DialogScreen<IReadOnlyList<DownloadViewModel>>
 {
-    private readonly IViewModelFactory _viewModelFactory;
-    private readonly DialogManager _dialogManager;
-    private readonly SettingsService _settingsService;
-
     public string? Title { get; set; }
 
     public IReadOnlyList<IVideo>? AvailableVideos { get; set; }
 
     public IReadOnlyList<IVideo>? SelectedVideos { get; set; }
 
-    public IReadOnlyList<Container> AvailableContainers { get; } = new[]
-    {
-        Container.Mp4,
-        Container.WebM,
-        Container.Mp3,
-        new Container("ogg")
-    };
+    public IReadOnlyList<Container> AvailableContainers { get; } =
+        new[] { Container.Mp4, Container.WebM, Container.Mp3, new Container("ogg") };
 
     public Container SelectedContainer { get; set; } = Container.Mp4;
 
     public IReadOnlyList<VideoQualityPreference> AvailableVideoQualityPreferences { get; } =
         Enum.GetValues<VideoQualityPreference>().Reverse().ToArray();
 
-    public VideoQualityPreference SelectedVideoQualityPreference { get; set; } = VideoQualityPreference.Highest;
-
-    public DownloadMultipleSetupViewModel(
-        IViewModelFactory viewModelFactory,
-        DialogManager dialogManager,
-        SettingsService settingsService)
-    {
-        _viewModelFactory = viewModelFactory;
-        _dialogManager = dialogManager;
-        _settingsService = settingsService;
-    }
+    public VideoQualityPreference SelectedVideoQualityPreference { get; set; } =
+        VideoQualityPreference.Highest;
 
     public void OnViewLoaded()
     {
-        SelectedContainer = _settingsService.LastContainer;
-        SelectedVideoQualityPreference = _settingsService.LastVideoQualityPreference;
+        SelectedContainer = settingsService.LastContainer;
+        SelectedVideoQualityPreference = settingsService.LastVideoQualityPreference;
     }
 
     public void CopyTitle() => Clipboard.SetText(Title!);
@@ -62,7 +48,7 @@ public class DownloadMultipleSetupViewModel : DialogScreen<IReadOnlyList<Downloa
 
     public void Confirm()
     {
-        var dirPath = _dialogManager.PromptDirectoryPath();
+        var dirPath = dialogManager.PromptDirectoryPath();
         if (string.IsNullOrWhiteSpace(dirPath))
             return;
 
@@ -74,14 +60,14 @@ public class DownloadMultipleSetupViewModel : DialogScreen<IReadOnlyList<Downloa
             var baseFilePath = Path.Combine(
                 dirPath,
                 FileNameTemplate.Apply(
-                    _settingsService.FileNameTemplate,
+                    settingsService.FileNameTemplate,
                     video,
                     SelectedContainer,
                     (i + 1).ToString().PadLeft(SelectedVideos.Count.ToString().Length, '0')
                 )
             );
 
-            if (_settingsService.ShouldSkipExistingFiles && File.Exists(baseFilePath))
+            if (settingsService.ShouldSkipExistingFiles && File.Exists(baseFilePath))
                 continue;
 
             var filePath = PathEx.EnsureUniquePath(baseFilePath);
@@ -91,7 +77,7 @@ public class DownloadMultipleSetupViewModel : DialogScreen<IReadOnlyList<Downloa
             File.WriteAllBytes(filePath, Array.Empty<byte>());
 
             downloads.Add(
-                _viewModelFactory.CreateDownloadViewModel(
+                viewModelFactory.CreateDownloadViewModel(
                     video,
                     new VideoDownloadPreference(SelectedContainer, SelectedVideoQualityPreference),
                     filePath
@@ -99,8 +85,8 @@ public class DownloadMultipleSetupViewModel : DialogScreen<IReadOnlyList<Downloa
             );
         }
 
-        _settingsService.LastContainer = SelectedContainer;
-        _settingsService.LastVideoQualityPreference = SelectedVideoQualityPreference;
+        settingsService.LastContainer = SelectedContainer;
+        settingsService.LastVideoQualityPreference = SelectedVideoQualityPreference;
 
         Close(downloads);
     }
@@ -112,15 +98,14 @@ public static class DownloadMultipleSetupViewModelExtensions
         this IViewModelFactory factory,
         string title,
         IReadOnlyList<IVideo> availableVideos,
-        bool preselectVideos = true)
+        bool preselectVideos = true
+    )
     {
         var viewModel = factory.CreateDownloadMultipleSetupViewModel();
 
         viewModel.Title = title;
         viewModel.AvailableVideos = availableVideos;
-        viewModel.SelectedVideos = preselectVideos
-            ? availableVideos
-            : Array.Empty<IVideo>();
+        viewModel.SelectedVideos = preselectVideos ? availableVideos : Array.Empty<IVideo>();
 
         return viewModel;
     }

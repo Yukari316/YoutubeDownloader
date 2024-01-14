@@ -91,6 +91,21 @@
                             IsChecked="{Binding IsAuthPersisted}" />
                     </DockPanel>
 
+                    <!--  Inject subtitles  -->
+                    <DockPanel
+                        Background="Transparent"
+                        LastChildFill="False"
+                        ToolTip="Inject subtitles into downloaded files">
+                        <TextBlock
+                            Margin="16,8"
+                            DockPanel.Dock="Left"
+                            Text="Inject subtitles" />
+                        <ToggleButton
+                            Margin="16,8"
+                            DockPanel.Dock="Right"
+                            IsChecked="{Binding ShouldInjectSubtitles}" />
+                    </DockPanel>
+
                     <!--  Inject tags  -->
                     <DockPanel
                         Background="Transparent"
@@ -110,7 +125,7 @@
                     <DockPanel
                         Background="Transparent"
                         LastChildFill="False"
-                        ToolTip="When selecting multiple videos to download, skip those that already have matching files in the target directory">
+                        ToolTip="When selecting multiple videos to download, skip those that already have matching files in the output directory">
                         <TextBlock
                             Margin="16,8"
                             DockPanel.Dock="Left"
@@ -157,7 +172,7 @@
                             Text="{Binding FileNameTemplate}" />
                     </DockPanel>
 
-                    <!--  Max concurrent downloads  -->
+                    <!--  Parallel limit  -->
                     <DockPanel
                         Margin="16,8"
                         Background="Transparent"
